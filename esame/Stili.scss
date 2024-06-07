@@ -14,16 +14,8 @@ body {
     background-position: center;
     background-repeat: no-repeat; /* Impedisce la ripetizione dell'immagine */
     background-attachment: fixed; /* Fissa l'immagine di sfondo mentre si scorre la pagina */
-    color: #fff; /* Colore del testo */
-
-    /* Stili per dispositivi di larghezza massima di 600px (ad esempio telefoni) */
-    @media (min-width: 320px) and (max-width: 500px) {
-        font-size: 20px;
-        padding: 40px;
-        margin: 60% 0%;
-    }
+    color: #fff;
 }
-
 
 /* Stili per il layout */
 .container {
@@ -31,7 +23,6 @@ body {
     max-width: 1200px; /* Larghezza massima del contenitore */
     margin: 0 auto; /* Centra il contenitore */
     padding: 20px;
-
 }
 
 /* Stili per l'intestazione */
@@ -42,15 +33,9 @@ body {
     font-size: 30px;
     padding: 100px;
     margin-top: 15%;
-
-    /* Stili per dispositivi di larghezza massima di 600px (ad esempio telefoni) */
-    @media (min-width: 320px) and (max-width: 500px) {
-        font-size: 20px;
-        padding: 40px;
-        margin: 60% 0%;
-    }
 }
 
+/* Stili per la sezione dei contatti */
 .contact {
     background-color: #333;
     color: #fff;
@@ -72,6 +57,7 @@ a {
     color: #999;
 }
 
+/* Stili per i bottoni */
 .abutton {
     display: inline-flex; /* Rende i bottoni allineati orizzontalmente */
     padding: 5px 20px;
@@ -81,63 +67,51 @@ a {
     height: 40px;
     width: 120px;
     border-radius: 15px 0px;
-    border-style: dotted ;
+    border-style: dotted;
     border-color: #999;
     transition: border-radius 1.0s, font-size 1.0s, padding 0.3s;
     margin: 10px 3px;
     text-align: center;
+}
 
-    &:hover {
-        border-radius: 0px 15px;
-        font-size: 18px;
-        padding: 3px 10px;
-    }
+.abutton:hover {
+    border-radius: 0px 15px;
+    font-size: 18px;
+    padding: 3px 10px;
 }
 
 .back {
     width: 100%; /* Larghezza massima del contenitore */
     text-align: center; /* Allinea i bottoni al centro */
     margin-bottom: 15%;
-
-    /* Stili per dispositivi di larghezza massima di 600px (ad esempio telefoni) */
-    @media (min-width: 320px) and (max-width: 500px) {
-        margin-bottom: 40%;
-    }
 }
 
-/* Stili per la barra di navigazione */
 nav {
     position: fixed;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     width: 100%;
     background-image: url('https://c4.wallpaperflare.com/wallpaper/314/907/600/digital-art-low-poly-geometry-minimalism-wallpaper-thumb.jpg');
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 10px 0;
+    z-index: 1000; /* Assicura che la barra di navigazione sia sopra tutto il resto */
 
     ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
-
-        li {
-            display: inline;
-            margin-left: 20px;
-
-            a {
-                color: #fff; /* Colore dei link */
-                text-decoration: none;
-            }
-        }
     }
 
-    /* Stili per dispositivi di larghezza minima di 768px (ad esempio tablet) */
-    @media (min-width: 768px) and (max-width: 990px) {
-        display: flex; /* Utilizza il layout flexbox per la nav */
-        justify-content: space-between; /* Distribuisce uniformemente gli elementi */
-        align-items: center; /* Allinea verticalmente al centro */
+    li {
+        display: inline;
+        margin-left: 20px;
+    }
+
+    a {
+        color: #fff; /* Colore dei link */
+        text-decoration: none;
     }
 }
 
@@ -154,6 +128,7 @@ nav {
     font-weight: bold;
     font-size: 12px;
     padding: 10px;
+    z-index: 1000; /* Assicura che il piè di pagina sia sopra tutto il resto */
 
     .logofooter {
         float: right;
@@ -166,30 +141,39 @@ nav {
     }
 }
 
-/* Stili per la Gallery e singoli lavori*/
+/* Stili per la Gallery e singoli lavori */
 .gallery-container {
     max-width: 80%;
     height: 170px;
     overflow-x: auto;
     white-space: nowrap;
     margin-left: 110px;
+    display: flex;
+    z-index: 1; /* Assicura che le immagini siano sotto la barra di navigazione */
 
     .gallery-item {
         display: inline-block;
         margin: 10px;
+        width: 170px;
+        height: 170px;
 
         img {
-            width: 200px;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Assicura che l'immagine copra l'intera area senza distorsione */
             filter: grayscale(100%);
-            transition: filter 0.5s;
+            transition: filter 0.5s, transform 0.5s;
+        }
 
-            &:hover {
-                filter: grayscale(0%);
-            }
+        img:hover {
+            filter: grayscale(0%);
+            transform: scale(1.1);
         }
     }
+}
 
+.category-container {
+    margin-bottom: 40px;
 }
 
 .clear {
@@ -198,20 +182,21 @@ nav {
 }
 
 .dettaglio {
-    
     color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 
-    .image {
+    .image img {
         float: left;
         margin: 3px;
-        max-width: 100%;
+        width: 400px;
         height: auto;
         display: flex;
+        margin-right: 20px;
     }
-
 }
-
-
 
 /* Stili per Contatti */
 legend, label, figure {
@@ -219,11 +204,9 @@ legend, label, figure {
     text-align: center;
 }
 
-
 label {
     font-weight: bold;
     font-size: 14px;
-
 }
 
 legend {
@@ -240,13 +223,12 @@ fieldset {
     margin: auto;
 }
 
-
-.error { 
+.error {
     color: red;
     font-size: 12px;
-    
-    .error-input { 
-        border: 2px solid red; 
+
+    .error-input {
+        border: 2px solid red;
     }
 
     .form-container {
@@ -257,7 +239,6 @@ fieldset {
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    
 }
 
 .form-field {
@@ -280,30 +261,20 @@ fieldset {
         border-radius: 5px;
         cursor: pointer;
         transition: transform 0.5s ease-in-out;
+    }
 
-        &:hover {
-            background-color: #0f86f5;
-            color: #333;
-            font-weight: bold;
-            transform: rotate(360deg);
-        }
+    input[type="submit"]:hover {
+        background-color: #0f86f5;
+        color: #333;
+        font-weight: bold;
+        transform: rotate(360deg);
     }
 }
-        
-
 
 /* Stili per dispositivi di larghezza massima di 600px (ad esempio telefoni) */
 @media (min-width: 320px) and (max-width: 500px) {
     nav, fieldset, .pgallery {
         padding: 10px; /* Riduce il padding */
-    }
-
-    label {
-        font-size: 10px;
-    }
-
-    textarea#message {
-        width: 250px;
     }
 
     .header {
@@ -312,8 +283,27 @@ fieldset {
         margin: 60% 0%;
     }
 
-    .back {
-        margin-bottom: 40%;
+    .contact {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .dettaglio {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dettaglio .image img {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .dettaglio p {
+        font-size: 14px;
+        margin: 5px 0;
+        padding: 0 10px;
     }
 
     .pgallery {
@@ -322,17 +312,30 @@ fieldset {
         margin-top: 10%;
     }
 
-    .work {
-        width: 200px;
-    }
-
-    .imgcont {
-        width: 290px;
-        height: 250px;
+    .back {
+        margin-bottom: 40%;
     }
 
     .gallery-container {
-        margin-left: 10%;
+        margin-left: 0;
+        padding: 0 10px;
+    }
+
+    .gallery-container .gallery-item {
+        width: 100px;
+        height: 100px;
+    }
+
+    .form-container {
+        padding: 10px;
+    }
+
+    label {
+        font-size: 10px;
+    }
+
+    textarea#message {
+        width: 250px;
     }
 
     .logofooter {

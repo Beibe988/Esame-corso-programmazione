@@ -1,46 +1,47 @@
 <?php
-    $titolo = "Portfolio";
+    $title_page = "Portfolio";
     $bottone_link = array(
-        "Homepage" => "indecs.php",
-        "Contattaci" => "contatti.php"
+        "Homepage" => "index.php",
+        "Contact Us" => "contacts.php"
     );
 
-    // Carica il contenuto del file JSON
-    $json_string = file_get_contents('image.json');
-
-    // Decodifica il JSON in un array PHP
-    $immagini_array = json_decode($json_string, true);
+    // Carica il file JSON
+    $json_data = file_get_contents('image.json');
+    $images_array = json_decode($json_data, true);
 
     // Controlla se l'array è stato correttamente decodificato
-    if ($immagini_array === null) {
+    if ($images_array === null) {
     echo "Si è verificato un errore durante la decodifica del JSON.";
     };
 
     // Includi head.php
     require_once 'head.php';
-?>
-<div class="container">
-    <?php
+
     // Includi nav.php
     require_once 'nav.php';
-    ?>
+    
+?>
+<div class="container">
     
     <!-- Testo di introduzione che può essere, ad esempio, una breve spiegazione della mission dell'azienda-->
     <p class="pgallery"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ut iaculis nunc, ut sodales ligula. Nam lobortis dui in pulvinar finibus. Donec in nunc et magna consequat commodo. Vestibulum sit amet lacus lorem. Praesent et scelerisque ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris at feugiat magna. Nam ornare lacinia tellus, vel aliquet quam sollicitudin a. Phasellus volutpat et sapien id laoreet. Integer sed nulla vitae nisi molestie pulvinar vel at dolor. Integer quis laoreet eros. Duis porta sapien nisl, non dictum sapien mattis vel.</p>
     
     <!--Galleria dei lavori, elenca tutte le categorie e le immagini al loro interno.
     Ogni immagine ha un link che punta alla pagina di dettaglio.
-    Il link contiene i parametri categoria e id. -->
-    <?php foreach ($immagini_array['categorie'] as $categoria => $immagini): ?>
-        <div class="gallery-container">
-        <div class="gallery-item">
-        <?php foreach ($immagini as $index => $immagine): ?>
-            <a href="dettaglio.php?categoria=<?= urlencode($categoria) ?>&id=<?= $index ?>">
-                <img src="<?= htmlspecialchars($immagine['url']) ?>" alt="<?= htmlspecialchars($immagine['title']) ?>">
-            </a>
-        <?php endforeach; ?>
+    Il link contiene i parametri categoria e id.
+    Utilizziamo un foreach per cercare attraverso ogni categoria nel file JSON. -->
+    <?php foreach ($images_array['categorie'] as $categoria): ?>
+        <div class="category-container">
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <?php foreach ($categoria['images'] as $index => $immagine): ?>
+                        <a href="imagedetails.php?categoria=<?= urlencode($categoria['name']) ?>&id=<?= $index ?>">
+                            <img src="<?= htmlspecialchars($immagine['url']) ?>" alt="<?= htmlspecialchars($immagine['title']) ?>">
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
-    </div>
     <?php endforeach; ?>
     
 
