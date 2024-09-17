@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://th.bing.com/th/id/R.ab82e32a31d2c51a6629c460ff3bd4c3?rik=l9A7%2f5pNi4rBRQ&riu=http%3a%2f%2fwww.publicdomainpictures.net%2fpictures%2f170000%2fvelka%2fgrunge-background-1463561668zRl.jpg&ehk=xzTbKwPLoNB%2ba5WFofmpb42FE%2bpNvZn2dY4vw4Y7xnw%3d&risl=&pid=ImgRaw&r=0');
+    margin: 0;
+    padding: 0;
+    
+}
+
+a {
+    color:#f9f9f9;
+    text-decoration:none;
+    font-weight: bold;
+}
+
+a:visited {
+    color:#999;
+}
+
+/* Container principale del form */
+.container, .containerworks {
+    width: 90%; /* Aumenta la larghezza del container principale */
+    max-width: 800px; /* Limita la larghezza massima */
+    margin: 0 auto; /* Centra il contenitore */
+    padding: 20px;
+    background-image: url('https://c4.wallpaperflare.com/wallpaper/314/907/600/digital-art-low-poly-geometry-minimalism-wallpaper-thumb.jpg');
+    color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra */
+}
+
+.containerworks{
+    max-width: 1100px;
+}
+
+h2 {
+    text-align: center;
+    color: #f9f9f9;
+}
+
+/* Input del form */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+.description {
+    width: calc(100% - 20px); /* Larghezza del 100% meno il padding */
+    padding: 10px;
+    margin-bottom: 15px; /* Spazio tra i campi */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.description {
+    height: 140px;
+}
+
+/* Pulsanti */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333; /* Colore pulsante */
+    color: #f9f9f9; /* Colore testo pulsante */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px; /* Spazio tra pulsanti */
+}
+
+button:hover {
+    background-color: #0056b3; /* Colore al passaggio del mouse */
+}
+
+.filter_button {
+    width: 20%;
+    height: 25;
+    padding: 0;
+}
+
+/* Tabella */
+table, .workstable {
+    color:#f9f9f9;
+    font-weight: bold;
+    width: 100%; /* Larghezza completa della tabella */
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed; /* Fissa la larghezza delle celle */
+}
+
+.workstable {
+    width: 1100px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden; /* Nasconde il contenuto in eccesso */
+}
+
+td {
+    height: 100px;
+    overflow-x: auto; /* Aggiunge uno scroll per il contenuto in eccesso */
+    overflow-y: auto; /* Aggiunge uno scroll per il contenuto in eccesso */
+}
+
+.cell_descr {
+    display: block;
+    max-height: 100px; /* Altezza massima del contenuto della cella */
+    overflow-y: auto; /* Barra di scorrimento verticale */
+    word-wrap: break-word;
+}
+
+
+/* Fissa la larghezza delle singole celle */
+.id_cell {
+    width: 40px; /* Imposta una larghezza fissa per la colonna delle azioni */
+}
+.user_cell, .title_cell, .cat_cell, .actions_cell {
+    width: 100px; /* Imposta una larghezza fissa per la colonna delle azioni */
+}
+
+
+/* Messaggi di errore */
+.error {
+    color: red;
+    margin-bottom: 15px;
+}

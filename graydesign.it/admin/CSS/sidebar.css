@@ -1,0 +1,37 @@
+/* Stile del contenitore del menu laterale */
+.sidebar {
+    height: 100vh; /* Altezza completa della pagina */
+    width: 200px; /* Larghezza del menu laterale */
+    position: fixed; /* Fissa il menu al lato della pagina */
+    top: 0;
+    left: 0;
+    background-color: #333; /* Colore di sfondo del menu */
+    padding-top: 20px; /* Spaziatura superiore */
+    overflow-x: hidden; /* Nasconde il contenuto che eccede in larghezza */
+}
+
+/* Stile per i link del menu */
+.sidebar a {
+    padding: 10px 15px; /* Spaziatura interna dei link */
+    text-decoration: none; /* Rimuove la sottolineatura */
+    font-size: 18px; /* Dimensione del testo */
+    color: white; /* Colore del testo */
+    display: block; /* Mostra i link come blocchi */
+    transition: background-color 0.3s; /* Transizione per l'effetto hover */
+}
+
+/* Effetto al passaggio del mouse */
+.sidebar a:hover {
+    background-color: #575757; /* Colore di sfondo al passaggio del mouse */
+}
+
+/* Stile per la pagina principale, spostata a destra del menu */
+.main-content {
+    margin-left: 200px; /* Lascia spazio per il menu laterale */
+    padding: 20px; /* Spaziatura interna */
+}
+
+/* Stile per il link attivo */
+.sidebar a.active {
+    background-color: #007bff; /* Colore del link attivo */
+}
