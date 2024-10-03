@@ -59,7 +59,15 @@ try {
                     foreach ($immagini as $immagine) {
                         if ($immagine['category_id'] == $categoria['id']): ?>
                             <a href="imagedetails.php?categoria=<?= urlencode($categoria['name']) ?>&id=<?= $immagine['id'] ?>">
-                                <img src="<?= htmlspecialchars($immagine['url_image']) ?>" alt="<?= htmlspecialchars($immagine['title']) ?>">
+                                <?php if (!empty($immagine['url_image'])): ?>
+                                <?php if (strpos($immagine['url_image'], 'http') === 0): ?>
+                                    <img src="<?= htmlspecialchars($immagine['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($immagine['title'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?php else: ?>
+                                    <img src="https://www.graydesign.it/admin/<?= htmlspecialchars($immagine['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($immagine['title'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?php endif; ?>
+                                <?php else: ?>
+                                    <p>Nessuna immagine disponibile</p>
+                                <?php endif; ?>
                             </a>
                         <?php endif;
                     } ?>

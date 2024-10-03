@@ -17,7 +17,7 @@ a:visited {
 }
 
 /* Container principale del form */
-.container, .containerworks {
+.container {
     width: 90%; /* Aumenta la larghezza del container principale */
     max-width: 800px; /* Limita la larghezza massima */
     margin: 0 auto; /* Centra il contenitore */
@@ -28,8 +28,14 @@ a:visited {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra */
 }
 
-.containerworks{
+.containerworks {
+    width: 90%;
     max-width: 1100px;
+    margin:0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -79,7 +85,7 @@ button:hover {
 }
 
 /* Tabella */
-table, .workstable {
+table {
     color:#f9f9f9;
     font-weight: bold;
     width: 100%; /* Larghezza completa della tabella */
@@ -90,6 +96,9 @@ table, .workstable {
 
 .workstable {
     width: 1100px;
+    color: #333;
+    font-weight: bold;
+    border-collapse: collapse;
 }
 
 th, td {
@@ -103,6 +112,12 @@ td {
     height: 100px;
     overflow-x: auto; /* Aggiunge uno scroll per il contenuto in eccesso */
     overflow-y: auto; /* Aggiunge uno scroll per il contenuto in eccesso */
+}
+
+.management {
+    width: 180px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .cell_descr {

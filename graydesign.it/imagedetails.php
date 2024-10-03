@@ -66,7 +66,18 @@
     <!-- Breve spiegazione del lavoro affiancata all'immagine -->
     <div class="dettaglio">
         <div class="image">
-            <img src="<?php echo htmlspecialchars($work_details['url_image']); ?>" alt="<?php echo htmlspecialchars($work_details['title']); ?>">
+            <?php if (!empty($work_details['url_image'])): ?>
+            <?php if (strpos($work_details['url_image'], 'http') === 0): ?>
+                <!-- URL esterno -->
+                <img src="<?= htmlspecialchars($work_details['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($work_details['title'], ENT_QUOTES, 'UTF-8') ?>">
+            <?php else: ?>
+                <!-- Percorso immagine locale -->
+                <img src="https://www.graydesign.it/admin/<?= htmlspecialchars($work_details['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($work_details['title'], ENT_QUOTES, 'UTF-8') ?>">
+            <?php endif; ?>
+            <?php else: ?>
+                <!-- Fallback nel caso non ci sia immagine -->
+                <p>Nessuna immagine disponibile</p>
+            <?php endif; ?>
         </div>
         <p>Data di creazione: <?php echo htmlspecialchars($work_details['created_at']); ?></p><br>
         <p>Descrizione: <?php echo htmlspecialchars($work_details['description']); ?></p><br>
@@ -80,7 +91,15 @@
         <?php foreach ($works_category as $work): ?>
             <div class="gallery-item">
                 <a href="imagedetails.php?categoria=<?= urlencode($category_name) ?>&id=<?= $work['id'] ?>">
-                    <img src="<?= htmlspecialchars($work['url_image']) ?>" alt="<?= htmlspecialchars($work['title']) ?>">
+                    <?php if (!empty($work['url_image'])): ?>
+                    <?php if (strpos($work['url_image'], 'http') === 0): ?>
+                        <img src="<?= htmlspecialchars($work['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($work['title'], ENT_QUOTES, 'UTF-8') ?>">
+                    <?php else: ?>
+                        <img src="https://www.graydesign.it/admin/<?= htmlspecialchars($work['url_image'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($work['title'], ENT_QUOTES, 'UTF-8') ?>">
+                    <?php endif; ?>
+                    <?php else: ?>
+                        <p>Nessuna immagine disponibile</p>
+                    <?php endif; ?>
                 </a>
             </div>
         <?php endforeach; ?>

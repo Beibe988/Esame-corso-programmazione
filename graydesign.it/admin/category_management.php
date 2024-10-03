@@ -62,8 +62,8 @@ $categories = $pdo->query("SELECT * FROM categories")->fetchAll();
     <script src="validation.js"></script>
 </head>
 <body>
-<div class="container">
-    <h2>Gestione Categorie</h2>
+<div class="containerworks">
+    <h1>Gestione Categorie</h1>
     <form method="POST" action="category_management.php" onsubmit="return validateCategoryForm()">
         <!-- Form per aggiungere/modificare categorie -->
         <input type="hidden" name="id" value="<?= isset($categoryToMod['id']) ? htmlspecialchars($categoryToMod['id'], ENT_QUOTES, 'UTF-8') : '' ?>">
@@ -74,7 +74,7 @@ $categories = $pdo->query("SELECT * FROM categories")->fetchAll();
         ?>
     </form>
 
-    <table>
+    <table class="workstable">
         <tr>
             <th class="id_cell">ID</th>
             <th>Nome Categoria</th>

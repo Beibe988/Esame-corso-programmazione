@@ -76,8 +76,8 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
     </script>
 </head>
 <body>
-<div class="container">
-    <h2>Gestione Utenti</h2>
+<div class="containerworks">
+    <h1>Gestione Utenti</h1>
     <form method="POST" action="user_management.php" onsubmit="return validateUserForm()">
         <!-- Form per aggiungere/modificare utenti -->
         <input type="hidden" name="id" id="user-id" value="<?= isset($userToMod['id']) ? htmlspecialchars($userToMod['id'], ENT_QUOTES, 'UTF-8') : '' ?>">
@@ -95,7 +95,7 @@ $users = $pdo->query("SELECT * FROM users")->fetchAll();
         ?>
     </form>
     
-    <table>
+    <table class="workstable">
         <tr>
             <th class="id_cell">ID</th>
             <th class="user_cell">Nome utente</th>
