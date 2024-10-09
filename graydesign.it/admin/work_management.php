@@ -5,9 +5,12 @@ include 'menu.php'; // Include il menu di navigazione
 
 session_start();
 
+$baseURL = "https://www.graydesign.it/admin/"; // URL di base del sito
+
+
 // Controlla se l'utente è loggato e ha i permessi da amministratore
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['is_admin'] != 1) {
-    header('Location: login.php'); // Se non è loggato o non è un amministratore, reindirizza alla pagina di login
+    header('Location: login.php');
     exit;
 }
 
@@ -23,44 +26,52 @@ if (isset($_POST['action'])) {
     $user_id = (int) $_SESSION['is_admin']; // Recupera l'ID dell'utente dalla sessione
     $id = isset($_POST['id']) ? (int) $_POST['id'] : null;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $imagePath = null;
+    $imagePath = null; // Percorso dell'immagine inizialmente nullo
     
-        // Verifica se l'utente ha caricato un'immagine
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        var_dump($_POST); // Visualizza i dati inviati
+        
+        $imagePath = isset($_POST['existing_image']) ? $_POST['existing_image'] : null; // Mantieni immagine esistente
+
+        // Gestione del caricamento del file
         if (!empty($_FILES['imageUpload']['tmp_name'])) {
             $targetDir = "uploads/";
             $targetFile = $targetDir . basename($_FILES["imageUpload"]["name"]);
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-    
-            // Controlla se il file è un'immagine effettiva
+
+            // Verifica se è un'immagine valida
             $check = getimagesize($_FILES["imageUpload"]["tmp_name"]);
             if ($check !== false) {
                 if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $targetFile)) {
-                    $imagePath = $targetFile;
+                    $imagePath = $baseURL . $targetFile; // Aggiorna con nuovo percorso immagine
                 } else {
                     echo "Errore nel caricamento dell'immagine.";
                 }
             } else {
-                echo "Il file non è un'immagine.";
+                echo "Il file non è un'immagine valida.";
             }
         } elseif (!empty($_POST['url_image'])) {
-            // Se è stato fornito un URL, usalo
+            // Se viene fornito un URL per l'immagine, usalo
             $imagePath = $_POST['url_image'];
         }
-    
-        $stmt = $pdo->prepare("INSERT INTO works (title, description, category_id, image_path, committed_by) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$_POST['title'], $_POST['description'], $_POST['category_id'], $imagePath, $_POST['committed_by']]);
-    }
 
-    // Prosegui con l'azione (aggiungi o modifica)
-    try {
+        // Se non c'è né un'immagine caricata né un URL, mantieni l'immagine esistente
+        if (empty($imagePath)) {
+            $imagePath = $_POST['existing_image'];
+        }
+        
+
+        // Aggiungi o modifica il lavoro in base all'azione
         if ($action == 'add') {
-            $created_at = date('Y-m-d'); // Ottieni la data
+            $created_at = date('Y-m-d'); // Data di creazione
+
+            // Inserisci un nuovo lavoro
             $stmt = $pdo->prepare("INSERT INTO works (title, url_image, description, committed_by, created_at, category_id, user_id) 
-                                   VALUES (:title, :url_image, :description, :committed_by, :created_at, :category_id, :user_id)");
+                                VALUES (:title, :url_image, :description, :committed_by, :created_at, :category_id, :user_id)");
             $stmt->execute([
                 'title' => $title,
-                'url_image' => $url_image,
+                'url_image' => $imagePath, // Percorso dell'immagine (upload o URL)
                 'description' => $description,
                 'committed_by' => $committed_by,
                 'created_at' => $created_at,
@@ -68,23 +79,23 @@ if (isset($_POST['action'])) {
                 'user_id' => $user_id
             ]);
             echo "Lavoro aggiunto con successo!";
-        } elseif ($action == 'edit') {
-            // Aggiornamento dei dati del lavoro
-            $stmt = $pdo->prepare("UPDATE works SET title=:title, description=:description, url_image=:url_image, committed_by=:committed_by, category_id=:category_id 
-                                   WHERE id=:id");
+        } elseif ($action == 'edit' && !empty($id)) {
+            // Controllo se l'ID esiste prima di aggiornare
+            $stmt = $pdo->prepare("UPDATE works SET title=:title, description=:description, url_image=:url_image, committed_by=:committed_by, category_id=:category_id WHERE id=:id");
             $stmt->execute([
                 'title' => $title,
                 'description' => $description,
-                'url_image' => $url_image,
+                'url_image' => $imagePath,
                 'committed_by' => $committed_by,
                 'category_id' => $category_id,
                 'id' => $id
             ]);
             echo "Lavoro modificato con successo!";
+        } else {
+            echo "Errore: ID lavoro mancante per la modifica.";
         }
-    } catch (PDOException $e) {
-        echo "Errore durante l'operazione: " . $e->getMessage();
     }
+
 }
 
 // Recupera i dati dei lavori da modificare
@@ -166,6 +177,7 @@ if ($filter_category_id) {
         <form method="POST" action="work_management.php" enctype="multipart/form-data" onsubmit="return validateWorkForm()">
             <!-- Form per aggiungere/modificare lavori -->
             <input type="hidden" name="id" value="<?= isset($workToMod['id']) ? htmlspecialchars($workToMod['id'], ENT_QUOTES, 'UTF-8') : '' ?>">
+            <input type="hidden" name="existing_image" value="<?= isset($workToMod['url_image']) ? htmlspecialchars($workToMod['url_image'], ENT_QUOTES, 'UTF-8') : '' ?>">
             <input type="text" name="title" placeholder="Titolo lavoro" value="<?= isset($workToMod['title']) ? htmlspecialchars($workToMod['title'], ENT_QUOTES, 'UTF-8') : '' ?>" required>
             <!-- Input per caricamento immagine o URL -->
             <label for="imageUpload">Carica immagine:</label>
